@@ -1,8 +1,9 @@
 import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
+import { useRecoilState , todoListState} from 'recoil';
 import styles from "../styles/Home.module.css";
 
 const Home = forwardRef((props, ref) => {
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = useRecoilState(todoListState);
     const [todo, setTodo] = useState('');
     const [logs, setLogs] = useState([]);
 
@@ -10,6 +11,7 @@ const Home = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         addTodo
     }));
+    
     const addTodo = () => {
         console.log('yo');
         if (todo.trim() === '') return;
@@ -24,8 +26,6 @@ const Home = forwardRef((props, ref) => {
         if (todoInputRef.current) {
             todoInputRef.current.value = '';
         }
-
-
     };
 
     const toggleComplete = (index) => {
@@ -46,7 +46,6 @@ const Home = forwardRef((props, ref) => {
 
         setTodos(newTodos);
     };
-
 
     return (
         <div className={styles.maincontainer}>
